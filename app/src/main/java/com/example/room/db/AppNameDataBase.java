@@ -14,29 +14,30 @@ import com.example.room.db.entity.Teachers;
 @Database(entities = {Student.class, Teachers.class}, version = 1 , exportSchema = false)
 public abstract class AppNameDataBase extends RoomDatabase {
 
-    public abstract AppDao appDao();
-    private static AppNameDataBase INSTANCE = null;
+    abstract AppDao appDao();
+    private static AppNameDataBase instance;
     private static Context context;
 
     /**
      * Create SingleTon class with activityContext
      */
-    public static synchronized AppNameDataBase getInstance(Context activityContext) {
+    static synchronized AppNameDataBase getInstance(Context activityContext) {
         context = activityContext;
-        if (null == INSTANCE) {
-            INSTANCE = buildDatabaseInstance(context);
+        if (instance == null) {
+            instance = buildDatabaseInstance(context);
         }
-        return INSTANCE;
+        return instance;
     }
+
 
     /**
      * Create SingleTon class with Existing activityContext
      */
     public static synchronized AppNameDataBase getInstance() {
-        if (null == INSTANCE) {
-            INSTANCE = buildDatabaseInstance(context);
+        if (null == instance) {
+            instance = buildDatabaseInstance(context);
         }
-        return INSTANCE;
+        return instance;
     }
 
     /**
@@ -51,7 +52,7 @@ public abstract class AppNameDataBase extends RoomDatabase {
 
 
     public void cleanUp(){
-        INSTANCE = null;
+        instance = null;
     }
 
 }

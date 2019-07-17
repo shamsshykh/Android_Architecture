@@ -27,6 +27,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -34,7 +35,16 @@ dependencies {
     def lifecycle_version = "1.1.1"
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version" // For Kotlin use kapt instead of annotationProcessor
+    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+    // For Kotlin use kapt instead of annotationProcessor
+
+    def nav_version = "1.0.0"
+    // Navigation
+    implementation "android.arch.navigation:navigation-fragment:$nav_version"
+    // For Kotlin use navigation-fragment-ktx
+    implementation "android.arch.navigation:navigation-ui:$nav_version"
+    // For Kotlin use navigation-ui-ktx
+
 
     def room_version = "1.1.1"
     // Room
@@ -47,11 +57,12 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
+
     // stetho for virtual database
     def stetho_version = "1.5.1"
     debugImplementation "com.facebook.stetho:stetho:$stetho_version"
-    debugImplementation "com.facebook.stetho:stetho-okhttp3:$stetho_version" // hit URL chrome://inspect/#devices
-
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+    // hit URL chrome://inspect/#devices
 
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'  // find URL debugdb in Log

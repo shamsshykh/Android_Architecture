@@ -1,25 +1,21 @@
 package com.example.room.activity.main;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.room.R;
+import com.example.room.activity.base.BaseActivity;
 import com.example.room.db.entity.Student;
-import com.example.room.retrofit.ApiService;
 import com.example.room.retrofit.RetrofitClient;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private String TAG=this.getClass().getSimpleName();
     EditText name,fname,batch;
     private MainViewModel model;
-    private MainNavigator navigator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +25,11 @@ public class MainActivity extends AppCompatActivity {
         fname=findViewById(R.id.f_name);
         batch=findViewById(R.id.batch);
         model=ViewModelProviders.of(this).get(MainViewModel.class);
-        navigator=(MainNavigator) getApplication();
     }
 
     public void add(View view) {
         Student student=new Student(name.getText().toString(),fname.getText().toString(),batch.getText().toString());
-        navigator.add(student);
+        model.add(student);
 
     }
 
@@ -45,12 +40,23 @@ public class MainActivity extends AppCompatActivity {
         student.setName(name.getText().toString());
         student.setF_name(fname.getText().toString());
         student.setBatch(batch.getText().toString());
-        navigator.update(student);
+        model.update(student);
     }
 
     public void dlt(View view) {
         Student student=new Student();
         student.set_id(6);
-        navigator.dlt(student);
+        model.dlt(student);
+    }
+
+
+    public void getAllStudent(){
+        model.getListOfStudent().observe(this,students -> {
+            Toast.makeText(this, ""+students, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    public void getall(View view) {
+        getAllStudent();
     }
 }

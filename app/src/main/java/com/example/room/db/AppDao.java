@@ -25,16 +25,16 @@ public  interface AppDao {
     void updateUserQuery(Student userModel); // mean trigger Update query
 
     @Delete
-    void dltUserQuery(Student  id); // mean trigger Delete query
+    void dltUserQuery(Student id); // mean trigger Delete query
+
+    @Query("DELETE from student")
+    void dltAllStudentQuery();
 
     @Query("Select * from student")
-    LiveData<List<Student>> getAllTeachersQuery();
+    LiveData<List<Student>> getAllStudentQuery();
 
     @Query("SELECT * FROM student WHERE _id=:id")
-    Student getteacher(int id);
-
-    @Query("SELECT * FROM student")
-    Cursor getRepoCursor();
+    Student getteacherByID(int id);
 
     @Query("SELECT * FROM student WHERE name=:name LIMIT :max")
     List<Student> getReposByName(int max, String... name);

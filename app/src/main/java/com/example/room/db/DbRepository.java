@@ -11,14 +11,14 @@ import com.example.room.db.entity.Teachers;
 
 import java.util.List;
 
-public class DbRepository extends AndroidViewModel {
+public class DbRepository {
     private AppDao appDao;
+    private LiveData<List<Student>> listOfStudent;
 
-    public DbRepository(Application context){
-        super(context);
-        AppNameDataBase.getInstance(context).appDao();
-        AppNameDataBase dataBase=AppNameDataBase.getInstance(context);
+    public DbRepository(Application application){
+        AppNameDataBase dataBase=AppNameDataBase.getInstance(application);
         appDao = dataBase.appDao();
+        listOfStudent=appDao.getAllStudentQuery();
     }
 
     public void insertUser(Student student){
@@ -31,6 +31,10 @@ public class DbRepository extends AndroidViewModel {
 
     public void deleteUser(Student id){
         new DeleteAsyncTask(appDao).execute(id);
+    }
+
+    public LiveData<List<Student>> getAllStudents(){
+        return listOfStudent;
     }
 
 
@@ -76,12 +80,6 @@ public class DbRepository extends AndroidViewModel {
             return null;
         }
     }
-
-
-
-
-
-
 
 
 }
